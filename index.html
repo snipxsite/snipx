@@ -106,7 +106,10 @@ Level: <span id="level">Beginner</span>
 
 <div class="card">
 
-<h3>Watch Video</h3>
+<div class="card" onclick="watch()">
+<h3>Watch Videos</h3>
+<p>Earn $0.02 per video</p>
+</div>
 
 <p>Earn $0.02</p>
 
@@ -116,7 +119,10 @@ Level: <span id="level">Beginner</span>
 
 <div class="card">
 
+<div class="card" onclick="ads()">
 <h3>Click Ads</h3>
+<p>Earn $0.01 per click</p>
+</div>
 
 <p>Earn $0.01</p>
 
@@ -325,4 +331,16 @@ history("Withdraw",0)
 </script>
 
 </body>
+
 </html>
+function social(){
+
+balance+=0.05
+
+update()
+
+history("Follow Social",0.05)
+
+alert("You earned $0.05")
+
+}
