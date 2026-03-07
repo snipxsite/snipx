@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SnipX</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#0f172a;
+color:white;
+text-align:center;
+}
+
+header{
+background:#020617;
+padding:20px;
+font-size:24px;
+font-weight:bold;
+}
+
+.hero{
+padding:60px 20px;
+}
+
+button{
+padding:12px 25px;
+border:none;
+background:#22c55e;
+color:white;
+font-size:16px;
+border-radius:8px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.tasks{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+padding:30px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+}
+
+.dashboard{
+display:none;
+padding:20px;
+}
+
+.balance{
+font-size:26px;
+margin-bottom:10px;
+}
+
+input{
+padding:10px;
+margin:5px;
+border-radius:6px;
+border:none;
+}
+
+.section{
+margin-top:30px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>SnipX</header>
+
+<div class="hero" id="home">
+
+<h1>Earn Money Online</h1>
+
+<p>Complete simple tasks and earn rewards instantly.</p>
+
+<input id="username" placeholder="Username">
+
+<br>
+
+<button onclick="start()">Start Earning</button>
+
+</div>
+
+<div class="dashboard" id="dashboard">
+
+<h2 id="welcome"></h2>
+
+<div class="balance">
+Balance: $<span id="money">0.00</span>
+</div>
+
+<div>
+Level: <span id="level">Beginner</span>
+</div>
+
+<div class="tasks">
+
+<div class="card">
+
+<h3>Watch Video</h3>
+
+<p>Earn $0.02</p>
+
+<button onclick="watch()">Start</button>
+
+</div>
+
+<div class="card">
+
+<h3>Click Ads</h3>
+
+<p>Earn $0.01</p>
+
+<button onclick="ads()">Click</button>
+
+</div>
+
+<div class="card">
+
+<h3>Daily Bonus</h3>
+
+<p>Earn $0.05</p>
+
+<button onclick="bonus()">Claim</button>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h3>Referral</h3>
+
+<p>Invite friends and earn rewards.</p>
+
+<button onclick="ref()">Copy Referral Link</button>
+
+<p>Invites: <span id="refs">0</span></p>
+
+</div>
+
+<div class="section">
+
+<h3>Withdraw</h3>
+
+<input id="wallet" placeholder="Dana / PayPal">
+
+<br>
+
+<button onclick="withdraw()">Withdraw</button>
+
+</div>
+
+<div class="section">
+
+<h3>Recent Activity</h3>
+
+<div id="history"></div>
+
+</div>
+
+</div>
+
+<script>
+
+let balance=0
+let refs=0
+
+function update(){
+
+document.getElementById("money").innerText=balance.toFixed(2)
+
+localStorage.setItem("balance",balance)
+
+level()
+
+}
+
+function level(){
+
+let lvl="Beginner"
+
+if(balance>=5) lvl="Worker"
+if(balance>=10) lvl="Pro"
+if(balance>=25) lvl="Elite"
+
+document.getElementById("level").innerText=lvl
+
+}
+
+function history(task,amount){
+
+let log=JSON.parse(localStorage.getItem("history")||"[]")
+
+log.push(task+" +$"+amount)
+
+localStorage.setItem("history",JSON.stringify(log))
+
+renderHistory()
+
+}
+
+function renderHistory(){
+
+let log=JSON.parse(localStorage.getItem("history")||"[]")
+
+let html=""
+
+log.slice(-5).reverse().forEach(i=>{
+html+="<p>"+i+"</p>"
+})
+
+document.getElementById("history").innerHTML=html
+
+}
+
+function start(){
+
+let name=document.getElementById("username").value
+
+if(name==""){
+alert("Enter username")
+return
+}
+
+document.getElementById("home").style.display="none"
+
+document.getElementById("dashboard").style.display="block"
+
+document.getElementById("welcome").innerText="Welcome "+name
+
+let saved=localStorage.getItem("balance")
+
+if(saved){
+balance=parseFloat(saved)
+}
+
+update()
+
+renderHistory()
+
+}
+
+function watch(){
+
+balance+=0.02
+
+update()
+
+history("Watch Video",0.02)
+
+alert("You earned $0.02")
+
+}
+
+function ads(){
+
+balance+=0.01
+
+update()
+
+history("Click Ads",0.01)
+
+alert("Ad clicked +$0.01")
+
+}
+
+function bonus(){
+
+balance+=0.05
+
+update()
+
+history("Daily Bonus",0.05)
+
+alert("Daily bonus +$0.05")
+
+}
+
+function ref(){
+
+let link=window.location.href
+
+navigator.clipboard.writeText(link)
+
+refs++
+
+document.getElementById("refs").innerText=refs
+
+alert("Referral link copied")
+
+}
+
+function withdraw(){
+
+let wallet=document.getElementById("wallet").value
+
+if(balance<1){
+
+alert("Minimum withdraw $1")
+
+return
+
+}
+
+alert("Withdraw request sent to "+wallet)
+
+balance=0
+
+update()
+
+history("Withdraw",0)
+
+}
+
+</script>
+
+</body>
+</html>
