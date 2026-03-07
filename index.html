@@ -2,8 +2,7 @@
 <html>
 <head>
 
-<title>SnipXsite</title>
-
+<title>SnipX</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -11,80 +10,111 @@
 body{
 margin:0;
 font-family:Arial;
-background:linear-gradient(135deg,#0f172a,#020617);
+background:#0f172a;
 color:white;
-text-align:center;
 }
 
-header{
+nav{
+display:flex;
+justify-content:space-between;
+padding:15px 30px;
 background:#020617;
-padding:20px;
-font-size:26px;
+}
+
+.logo{
+font-size:22px;
 font-weight:bold;
-letter-spacing:1px;
+}
+
+.menu a{
+margin-left:20px;
+color:white;
+text-decoration:none;
 }
 
 .hero{
+text-align:center;
 padding:80px 20px;
 }
 
 input{
-padding:12px;
-border-radius:8px;
+padding:10px;
+border-radius:6px;
 border:none;
-width:200px;
 }
 
 button{
-padding:12px 25px;
-border:none;
 background:#22c55e;
 color:white;
-font-size:16px;
+border:none;
+padding:10px 20px;
 border-radius:8px;
 cursor:pointer;
-transition:0.3s;
+margin-top:10px;
 }
 
-button:hover{
-background:#16a34a;
+.dashboard{
+display:none;
+padding:30px;
+}
+
+.balance{
+font-size:30px;
+color:#38bdf8;
+margin-bottom:10px;
+}
+
+.level{
+margin-bottom:20px;
 }
 
 .tasks{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:25px;
-padding:40px;
+gap:20px;
 }
 
 .card{
 background:#1e293b;
-padding:25px;
+padding:20px;
 border-radius:12px;
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
-}
-
-.balance{
-font-size:28px;
-margin-bottom:15px;
-color:#38bdf8;
+text-align:center;
 }
 
 .section{
 margin-top:40px;
 }
 
+.leaderboard{
+background:#1e293b;
+padding:20px;
+border-radius:10px;
+}
+
+footer{
+margin-top:50px;
+text-align:center;
+color:#aaa;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<header>SnipX</header>
+<nav>
+
+<div class="logo">SnipX</div>
+
+<div class="menu">
+<a href="#">Dashboard</a>
+<a href="#">Tasks</a>
+<a href="#">Withdraw</a>
+<a href="#">Leaderboard</a>
+</div>
+
+</nav>
 
 <div class="hero" id="home">
 
@@ -100,71 +130,53 @@ margin-top:40px;
 
 </div>
 
-<div class="container dashboard" id="dashboard">
+<div class="dashboard" id="dashboard">
 
 <div class="balance">
 Balance: $<span id="money">0.00</span>
 </div>
 
-<div class="feed">
+<div class="level">
+Level: <span id="level">Beginner</span>
+</div>
+
+<div class="tasks">
 
 <div class="card">
 
-<img src="https://picsum.photos/800/400?1">
+<h3>Watch Video</h3>
 
-<div class="card-content">
+<p>Earn $0.02</p>
 
-<h3>Watch Viral Video</h3>
-
-<p>Watch trending video and earn $0.02</p>
-
-<button onclick="watch()">Watch Video</button>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/800/400?2">
-
-<div class="card-content">
-
-<h3>Click Sponsored Ads</h3>
-
-<p>Earn $0.01 by clicking ads</p>
-
-<button onclick="ads()">Click Ad</button>
-
-</div>
+<button onclick="watch()">Start</button>
 
 </div>
 
 <div class="card">
 
-<img src="https://picsum.photos/800/400?3">
+<h3>Click Ads</h3>
 
-<div class="card-content">
+<p>Earn $0.01</p>
 
-<h3>Follow Social Media</h3>
+<button onclick="ads()">Click</button>
 
-<p>Follow account and earn $0.05</p>
+</div>
+
+<div class="card">
+
+<h3>Follow Social</h3>
+
+<p>Earn $0.05</p>
 
 <button onclick="social()">Follow</button>
 
 </div>
 
-</div>
-
 <div class="card">
-
-<img src="https://picsum.photos/800/400?4">
-
-<div class="card-content">
 
 <h3>Daily Bonus</h3>
 
-<p>Claim your daily reward $0.05</p>
+<p>Earn $0.05</p>
 
 <button onclick="bonus()">Claim</button>
 
@@ -172,7 +184,43 @@ Balance: $<span id="money">0.00</span>
 
 </div>
 
+<div class="section">
+
+<h3>Withdraw</h3>
+
+<input id="wallet" placeholder="Dana / PayPal">
+
+<button onclick="withdraw()">Withdraw</button>
+
 </div>
+
+<div class="section">
+
+<h3>Referral</h3>
+
+<input id="refLink" readonly>
+
+<button onclick="copyRef()">Copy Link</button>
+
+<p>Invites: <span id="refs">0</span></p>
+
+</div>
+
+<div class="section leaderboard">
+
+<h3>Top Earners</h3>
+
+<p>1. Alex — $120</p>
+<p>2. Sarah — $98</p>
+<p>3. John — $75</p>
+
+</div>
+
+<div class="section">
+
+<h3>Recent Activity</h3>
+
+<div id="history"></div>
 
 </div>
 
@@ -182,15 +230,33 @@ Balance: $<span id="money">0.00</span>
 
 </footer>
 
+</div>
+
 <script>
 
 let balance=localStorage.getItem("balance")?parseFloat(localStorage.getItem("balance")):0
+
+let refs=localStorage.getItem("refs")?parseInt(localStorage.getItem("refs")):0
 
 function update(){
 
 document.getElementById("money").innerText=balance.toFixed(2)
 
 localStorage.setItem("balance",balance)
+
+updateLevel()
+
+}
+
+function updateLevel(){
+
+let lvl="Beginner"
+
+if(balance>=5) lvl="Worker"
+if(balance>=10) lvl="Pro"
+if(balance>=25) lvl="Elite"
+
+document.getElementById("level").innerText=lvl
 
 }
 
@@ -209,6 +275,38 @@ document.getElementById("dashboard").style.display="block"
 
 update()
 
+renderHistory()
+
+document.getElementById("refs").innerText=refs
+
+document.getElementById("refLink").value=window.location.href+"?ref="+name
+
+}
+
+function history(text){
+
+let logs=JSON.parse(localStorage.getItem("history")||"[]")
+
+logs.push(text)
+
+localStorage.setItem("history",JSON.stringify(logs))
+
+renderHistory()
+
+}
+
+function renderHistory(){
+
+let logs=JSON.parse(localStorage.getItem("history")||"[]")
+
+let html=""
+
+logs.slice(-5).reverse().forEach(i=>{
+html+="<p>"+i+"</p>"
+})
+
+document.getElementById("history").innerHTML=html
+
 }
 
 function watch(){
@@ -217,7 +315,7 @@ balance+=0.02
 
 update()
 
-alert("You earned $0.02")
+history("Watch Video +$0.02")
 
 }
 
@@ -227,7 +325,7 @@ balance+=0.01
 
 update()
 
-alert("Ad clicked +$0.01")
+history("Click Ads +$0.01")
 
 }
 
@@ -237,7 +335,7 @@ balance+=0.05
 
 update()
 
-alert("You earned $0.05")
+history("Follow Social +$0.05")
 
 }
 
@@ -247,7 +345,43 @@ balance+=0.05
 
 update()
 
-alert("Daily bonus +$0.05")
+history("Daily Bonus +$0.05")
+
+}
+
+function withdraw(){
+
+let wallet=document.getElementById("wallet").value
+
+if(balance<1){
+
+alert("Minimum withdraw $1")
+
+return
+
+}
+
+alert("Withdraw request sent to "+wallet)
+
+balance=0
+
+update()
+
+history("Withdraw Request")
+
+}
+
+function copyRef(){
+
+navigator.clipboard.writeText(document.getElementById("refLink").value)
+
+refs++
+
+localStorage.setItem("refs",refs)
+
+document.getElementById("refs").innerText=refs
+
+alert("Referral link copied")
 
 }
 
@@ -255,4 +389,3 @@ alert("Daily bonus +$0.05")
 
 </body>
 </html>
-
