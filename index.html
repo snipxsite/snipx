@@ -106,10 +106,7 @@ Level: <span id="level">Beginner</span>
 
 <div class="card">
 
-<div class="card" onclick="watch()">
-<h3>Watch Videos</h3>
-<p>Earn $0.02 per video</p>
-</div>
+<h3>Watch Video</h3>
 
 <p>Earn $0.02</p>
 
@@ -119,10 +116,7 @@ Level: <span id="level">Beginner</span>
 
 <div class="card">
 
-<div class="card" onclick="ads()">
 <h3>Click Ads</h3>
-<p>Earn $0.01 per click</p>
-</div>
 
 <p>Earn $0.01</p>
 
@@ -178,12 +172,12 @@ Level: <span id="level">Beginner</span>
 
 <script>
 
-let balance=0
-let refs=0
+let balance = localStorage.getItem("balance") ? parseFloat(localStorage.getItem("balance")) : 0
+let refs = localStorage.getItem("refs") ? parseInt(localStorage.getItem("refs")) : 0
 
 function update(){
 
-document.getElementById("money").innerText=balance.toFixed(2)
+document.getElementById("money").innerText = balance.toFixed(2)
 
 localStorage.setItem("balance",balance)
 
@@ -244,15 +238,11 @@ document.getElementById("dashboard").style.display="block"
 
 document.getElementById("welcome").innerText="Welcome "+name
 
-let saved=localStorage.getItem("balance")
-
-if(saved){
-balance=parseFloat(saved)
-}
-
 update()
 
 renderHistory()
+
+document.getElementById("refs").innerText=refs
 
 }
 
@@ -300,6 +290,8 @@ navigator.clipboard.writeText(link)
 
 refs++
 
+localStorage.setItem("refs",refs)
+
 document.getElementById("refs").innerText=refs
 
 alert("Referral link copied")
@@ -331,16 +323,4 @@ history("Withdraw",0)
 </script>
 
 </body>
-
 </html>
-function social(){
-
-balance+=0.05
-
-update()
-
-history("Follow Social",0.05)
-
-alert("You earned $0.05")
-
-}
