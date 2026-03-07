@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>SnipX</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#f1f1f1;
+}
+
+header{
+background:#e60023;
+color:white;
+padding:15px;
+font-size:26px;
+font-weight:bold;
+text-align:center;
+}
+
+.hero{
+padding:40px;
+text-align:center;
+background:white;
+}
+
+input{
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+background:#e60023;
+color:white;
+border:none;
+padding:12px 25px;
+font-size:16px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.balance{
+font-size:22px;
+margin-bottom:20px;
+font-weight:bold;
+}
+
+.feed{
+display:grid;
+gap:20px;
+}
+
+.card{
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.card img{
+width:100%;
+}
+
+.card-content{
+padding:20px;
+}
+
+.card h3{
+margin-top:0;
+}
+
+.dashboard{
+display:none;
+}
+
+footer{
+text-align:center;
+padding:20px;
+color:#666;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>SnipX</header>
+
+<div class="hero" id="home">
+
+<h1>Earn Money Online</h1>
+
+<p>Complete simple tasks and earn rewards instantly.</p>
+
+<input id="username" placeholder="Username">
+
+<br><br>
+
+<button onclick="start()">Start Earning</button>
+
+</div>
+
+<div class="container dashboard" id="dashboard">
+
+<div class="balance">
+Balance: $<span id="money">0.00</span>
+</div>
+
+<div class="feed">
+
+<div class="card">
+
+<img src="https://picsum.photos/800/400?1">
+
+<div class="card-content">
+
+<h3>Watch Viral Video</h3>
+
+<p>Watch trending video and earn $0.02</p>
+
+<button onclick="watch()">Watch Video</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/800/400?2">
+
+<div class="card-content">
+
+<h3>Click Sponsored Ads</h3>
+
+<p>Earn $0.01 by clicking ads</p>
+
+<button onclick="ads()">Click Ad</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/800/400?3">
+
+<div class="card-content">
+
+<h3>Follow Social Media</h3>
+
+<p>Follow account and earn $0.05</p>
+
+<button onclick="social()">Follow</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/800/400?4">
+
+<div class="card-content">
+
+<h3>Daily Bonus</h3>
+
+<p>Claim your daily reward $0.05</p>
+
+<button onclick="bonus()">Claim</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+© 2026 SnipX Microtask Platform
+
+</footer>
+
+<script>
+
+let balance=localStorage.getItem("balance")?parseFloat(localStorage.getItem("balance")):0
+
+function update(){
+
+document.getElementById("money").innerText=balance.toFixed(2)
+
+localStorage.setItem("balance",balance)
+
+}
+
+function start(){
+
+let name=document.getElementById("username").value
+
+if(name==""){
+alert("Enter username")
+return
+}
+
+document.getElementById("home").style.display="none"
+
+document.getElementById("dashboard").style.display="block"
+
+update()
+
+}
+
+function watch(){
+
+balance+=0.02
+
+update()
+
+alert("You earned $0.02")
+
+}
+
+function ads(){
+
+balance+=0.01
+
+update()
+
+alert("Ad clicked +$0.01")
+
+}
+
+function social(){
+
+balance+=0.05
+
+update()
+
+alert("You earned $0.05")
+
+}
+
+function bonus(){
+
+balance+=0.05
+
+update()
+
+alert("Daily bonus +$0.05")
+
+}
+
+</script>
+
+</body>
+</html>
